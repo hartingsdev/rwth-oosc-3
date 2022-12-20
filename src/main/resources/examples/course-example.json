@@ -1,0 +1,20 @@
+{
+  "id": "oosc",
+  "name": "oosc name",
+  "institute": {
+    "id": "swc",
+    "courses": [
+      "oosc"
+    ],
+    "mail": "swc@rwth-aachen.de"
+  },
+  "credits": 6,
+  "students": [
+    {
+      "matriculationNumber": 1,
+      "name": "Hans",
+      "surname": "Peter",
+      "credits": 0
+    }
+  ]
+}

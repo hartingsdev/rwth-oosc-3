@@ -1,0 +1,74 @@
+{
+  "$schema": "http://swc-schemas.org/course#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "institute": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "courses": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "mail": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "courses",
+        "mail"
+      ]
+    },
+    "credits": {
+      "type": "integer"
+    },
+    "students": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "matriculationNumber": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "surname": {
+              "type": "string"
+            },
+            "credits": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "matriculationNumber",
+            "name",
+            "surname",
+            "credits"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "institute",
+    "credits",
+    "students"
+  ]
+}

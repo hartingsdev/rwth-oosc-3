@@ -1,0 +1,24 @@
+{
+  "$schema": "http://swc-schemas.org/student#",
+  "type": "object",
+  "properties": {
+    "matriculationNumber": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "credits": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "matriculationNumber",
+    "name",
+    "surname",
+    "credits"
+  ]
+}
