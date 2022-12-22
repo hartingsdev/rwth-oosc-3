@@ -21,7 +21,7 @@ public class CourseRegistrationTests extends AbstractDataTests {
 
         RestAssured.post(studentLocation+"/courses/register/sqa")
                 .then()
-                .statusCode(200);
+                .statusCode(201);
 
         RestAssured.get(studentLocation+"/courses")
                 .then()
