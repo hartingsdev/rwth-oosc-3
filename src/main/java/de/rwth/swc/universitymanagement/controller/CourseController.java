@@ -6,6 +6,7 @@ import de.rwth.swc.universitymanagement.repository.CourseRepository;
 import de.rwth.swc.universitymanagement.repository.InstituteRepository;
 import de.rwth.swc.universitymanagement.request.CourseRequest;
 import de.rwth.swc.universitymanagement.service.CourseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,6 +44,11 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody CourseRequest courseRequest) {
+        Optional<Course> optionalCourse = courseRepository.findById(courseRequest.getId());
+        if (optionalCourse.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
         Optional<Institute> optionalInstitute = instituteRepository.findById(courseRequest.getInstituteId());
         if (optionalInstitute.isEmpty()) {
             return ResponseEntity.badRequest().build();
