@@ -1,6 +1,8 @@
 package de.rwth.swc.universitymanagement.controller;
 
+import de.rwth.swc.universitymanagement.entity.Course;
 import de.rwth.swc.universitymanagement.entity.Student;
+import de.rwth.swc.universitymanagement.repository.CourseRepository;
 import de.rwth.swc.universitymanagement.repository.StudentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.net.URI;
 public class StudentController {
 
     final private StudentRepository studentRepository;
+    final private CourseRepository courseRepository;
 
-    public StudentController(StudentRepository studentRepository) {
+    public StudentController(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping
@@ -78,5 +82,61 @@ public class StudentController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{matriculationNumber}/courses")
+    public ResponseEntity<List<Course>> getAllCoursesOfStudent(@PathVariable Integer matriculationNumber) {
+        Optional<Student> optionalStudent = studentRepository.findById(matriculationNumber);
+
+        if (optionalStudent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(optionalStudent.get().getCourses());
+    }
+
+    @PostMapping("/{matriculationNumber}/courses/register/{courseId}")
+    public ResponseEntity<List<Course>> addStudentToCourse(@PathVariable Integer matriculationNumber, @PathVariable String courseId) {
+        Optional<Student> optionalStudent = studentRepository.findById(matriculationNumber);
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalStudent.isEmpty() || optionalCourse.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Student student = optionalStudent.get();
+        Course course = optionalCourse.get();
+        student.getCourses().add(course);
+        course.getStudents().add(student);
+
+        Student saveStudent = studentRepository.save(student);
+        courseRepository.save(course);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("")
+                .build()
+                .toUri();
+
+        return ResponseEntity.created(location).body(saveStudent.getCourses());
+    }
+
+    @DeleteMapping("/{matriculationNumber}/courses/{courseId}")
+    public ResponseEntity<Student> removeStudentFromCourse(@PathVariable Integer matriculationNumber, @PathVariable String courseId) {
+        Optional<Student> optionalStudent = studentRepository.findById(matriculationNumber);
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalStudent.isEmpty() || optionalCourse.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Student student = optionalStudent.get();
+        Course course = optionalCourse.get();
+        student.getCourses().remove(course);
+        course.getStudents().remove(student);
+
+        Student savedStudent = studentRepository.save(student);
+        courseRepository.save(course);
+
+        return ResponseEntity.ok(savedStudent);
     }
 }
