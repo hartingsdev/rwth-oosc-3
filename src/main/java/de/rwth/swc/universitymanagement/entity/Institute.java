@@ -47,12 +47,4 @@ public class Institute {
         this.courses = courses;
     }
 
-    @Override
-    public String toString() {
-        return "Institute{" +
-                "id='" + id + '\'' +
-                ", mail='" + mail + '\'' +
-                ", courses=" + courses +
-                '}';
-    }
 }

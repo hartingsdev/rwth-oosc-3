@@ -70,14 +70,4 @@ public class Student {
         this.courses = courses;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "matriculationNumber=" + matriculationNumber +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", credits=" + credits +
-                ", courses=" + courses +
-                '}';
-    }
 }
