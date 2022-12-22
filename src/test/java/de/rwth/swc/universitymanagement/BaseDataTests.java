@@ -71,7 +71,7 @@ public class BaseDataTests extends AbstractDataTests {
         createInstitute("ide", "ide@rwth-aachen.de")
                 .assertThat().statusCode(200);
 
-        RestAssured.get("institutes/swc")
+        RestAssured.get("institutes/ide")
                 .then()
                 .assertThat().body(matchesJsonSchemaInClasspath("schemas/institute.schema.json"));
     }
