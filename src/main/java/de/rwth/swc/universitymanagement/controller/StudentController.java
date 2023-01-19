@@ -123,7 +123,7 @@ public class StudentController {
                 .build()
                 .toUri();
 
-        return ResponseEntity.created(location).body(saveStudent.getCourses());
+        return ResponseEntity.ok(saveStudent.getCourses());
     }
 
     @DeleteMapping("/{matriculationNumber}/courses/{courseId}")

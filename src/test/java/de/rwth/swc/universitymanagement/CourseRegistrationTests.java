@@ -21,7 +21,7 @@ public class CourseRegistrationTests extends AbstractDataTests {
 
         RestAssured.post(studentLocation+"/courses/register/sqa")
                 .then()
-                .statusCode(201);
+                .statusCode(200);
 
         RestAssured.get(studentLocation+"/courses")
                 .then()
@@ -34,8 +34,8 @@ public class CourseRegistrationTests extends AbstractDataTests {
                 .body("students[0].name", equalTo("Max"));
 
         RestAssured.delete(studentLocation+"/courses/abc")
-                        .then()
-                        .statusCode(404);
+                .then()
+                .statusCode(404);
 
         RestAssured.delete(studentLocation+"/courses/sqa")
                 .then()
