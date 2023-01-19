@@ -37,11 +37,6 @@ public class InstituteController {
 
     @PostMapping
     public ResponseEntity<Institute> createInstitute(@RequestBody Institute institute) {
-        Optional<Institute> optionalInstitute = instituteRepository.findById(institute.getId());
-        if (optionalInstitute.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-
         Institute savedInstitute = instituteRepository.save(institute);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

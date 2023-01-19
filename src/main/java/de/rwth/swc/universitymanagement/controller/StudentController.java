@@ -42,12 +42,6 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Optional<Student> optionalStudent = studentRepository.findById(student.getMatriculationNumber());
-        if (optionalStudent.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-
-        }
-
         // Better with default in the database, but I don't know how to do it with java persistence and h2
         if (student.getCredits() == null) {
             student.setCredits(0);

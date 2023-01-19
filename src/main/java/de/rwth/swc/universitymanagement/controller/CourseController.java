@@ -44,11 +44,6 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody CourseRequest courseRequest) {
-        Optional<Course> optionalCourse = courseRepository.findById(courseRequest.getId());
-        if (optionalCourse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-
         Optional<Institute> optionalInstitute = instituteRepository.findById(courseRequest.getInstituteId());
         if (optionalInstitute.isEmpty()) {
             return ResponseEntity.badRequest().build();
